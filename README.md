@@ -5,7 +5,7 @@ A clean automation tool to provision Oracle Cloud Infrastructure (OCI) Always Fr
 ## What is this?
 Two lightweight Python scripts designed to automate OCI instance creation:
 - **`amd/amd.py`**: Spawns `VM.Standard.E2.1.Micro` (AMD micro) instances.
-- **`arm/arm.py`**: Spawns `VM.Standard.A1.Flex` (ARM Ampere) instances (up to 4 OCPUs / 24 GB RAM).
+- **`arm/arm.py`**: Spawns `VM.Standard.A1.Flex` (ARM Ampere) instances (up to 2 OCPUs / 12 GB RAM).
 
 Both scripts run in a loop, handle OCI rate limits, and send status updates/success notifications via a Telegram Bot.
 
