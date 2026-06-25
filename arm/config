@@ -1,0 +1,8 @@
+## Example OCI config file for Oracle Cloud SDKs
+## Replace demo values with your real credentials.
+[DEFAULT]
+user=ocid1.user.oc1..exampleuniqueID
+fingerprint=12:34:56:78:90:ab:cd:ef:12:34:56:78:90:ab:cd:ef
+tenancy=ocid1.tenancy.oc1..exampleuniqueID
+region=ap-some-region-1
+key_file=oci_private_key.pem

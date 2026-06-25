@@ -1,0 +1,3 @@
+## Procfile: tells cloud platforms how to start your app.
+## This runs the bot worker process. Replace 'bot.py' with your main script if needed.
+worker: python3 bot.py
