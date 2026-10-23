@@ -6,6 +6,7 @@ Continuously retries when capacity is available with safe backoff.
 
 import datetime
 import email.utils
+import fcntl
 import logging
 import os
 import sys
@@ -98,6 +99,36 @@ def parse_int_or_none(val):
         if s.isdigit():
             return int(s)
     return None
+
+
+def acquire_process_lock(instance_name: str):
+    """
+    Acquire an advisory process file lock in /tmp to guarantee that only one
+    instance of this spawner script runs at any time, even after reboots or accidental launches.
+    Exits gracefully if another instance is already active.
+    """
+    safe_name = "".join(c if c.isalnum() or c in ("-", "_") else "_" for c in str(instance_name))
+    lock_file_path = Path("/tmp") / f"oci_spawner_{safe_name}.lock"
+    try:
+        lock_fd = open(lock_file_path, "a+")
+        fcntl.flock(lock_fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        lock_fd.seek(0)
+        lock_fd.truncate()
+        lock_fd.write(f"{os.getpid()}\n")
+        lock_fd.flush()
+        return lock_fd
+    except (IOError, BlockingIOError):
+        existing_pid = "unknown"
+        try:
+            with open(lock_file_path, "r") as f:
+                existing_pid = f.read().strip()
+        except Exception:
+            pass
+        logging.warning(
+            f"Another spawner process for '{instance_name}' is already active (PID: {existing_pid}). "
+            "Exiting immediately to prevent duplicate processes."
+        )
+        sys.exit(0)
 
 
 def check_system_clock_skew(max_skew_seconds=120):
@@ -447,6 +478,8 @@ def main():
     if not is_set(displayName):
         displayName = "instance-amd-micro"
         logging.info(f"Using default display name: '{displayName}'")
+
+    _process_lock_fd = acquire_process_lock(displayName)
 
     config = load_oci_config()
 
