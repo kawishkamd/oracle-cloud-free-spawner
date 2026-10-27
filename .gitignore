@@ -10,6 +10,45 @@ __pycache__/
 .ruff_cache/
 uv.lock
 
+# ------------------------------------------------------------------------------
+# Security: OCI Credentials, Private & Public Keys, Secrets (LOCAL USE ONLY)
+# ------------------------------------------------------------------------------
+# Private & Public Keys
+*.pem
+*.key
+*.pub
+*.pkcs8
+*.crt
+*.cer
+*.der
+*.pfx
+*.p12
+id_rsa*
+id_ed25519*
+id_ecdsa*
+id_dsa*
+amd.key
+oci_private_key.pem
+
+# OCI Config files
+*config
+!*config.example
+*.cfg
+*.conf
+
+# Environment variables & Secret files
+.env
+.env.*
+*.secret
+*.secrets
+*.token
+*.tokens
+*.credential
+*.credentials
+
+# Process locks
+*.lock
+
 # IDE / Editor settings
 .vscode/
 .idea/

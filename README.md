@@ -1,5 +1,13 @@
 # OCI Instance Spawner
 
+> [!CAUTION]
+> ## 🚨 LOCAL USE ONLY — DO NOT COMMIT OR PUSH TO GITHUB!
+> **This repository is strictly for LOCAL EXECUTION ONLY. DO NOT push this repository or any modifications to GitHub or any public/remote repository.**
+>
+> Running this tool requires configuring your **real Oracle Cloud API private key (`.pem` / `.key`)**, **tenancy and user OCIDs (`config`)**, **SSH keys**, and optional **Telegram bot tokens**.
+> If you commit or push this repository to GitHub or any remote repository, **YOUR ORACLE CLOUD CREDENTIALS AND PRIVATE KEYS WILL BE PUBLICLY EXPOSED AND COMPROMISED**.
+> Keep this entire project strictly local on your private machine or VPS.
+
 A clean, production-grade automation tool to provision Oracle Cloud Infrastructure (OCI) Always Free instances (AMD and ARM Ampere) by continuously retrying when capacity becomes available.
 
 ## What is this?
@@ -37,7 +45,10 @@ Ensure you have Python 3.8+ installed, then install the dependencies:
 pip install -r arm/requirements.txt
 ```
 
-### 2. Configure OCI Authentication
+### 2. Configure OCI Authentication (LOCAL USE ONLY)
+> [!WARNING]
+> Keep your credentials strictly local. Never run `git add` or commit private keys, configs, or tokens!
+
 1. Edit the `config` file inside `arm/` or `amd/` (or use standard `~/.oci/config`) with your user OCID, tenancy OCID, region, and API fingerprint.
 2. Place your private API key in `oci_private_key.pem` in the same directory (or set `key_file` in config).
 
